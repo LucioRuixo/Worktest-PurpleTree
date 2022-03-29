@@ -15,7 +15,8 @@ namespace Worktest_PurpleTree.Gameplay
         bool throwing = true;
         int throwCoroutineID = -1;
 
-        void Start() => throwCoroutineID = CoroutineManager.Instance.WaitForSeconds(model.LaunchInterval, SpawnProjectile, true);
+        //void Start() => throwCoroutineID = CoroutineManager.Instance.WaitForSeconds(model.LaunchInterval, SpawnProjectile, true);
+        void Start() => throwCoroutineID = CoroutineManager.Instance.WaitForSeconds(model.LaunchInterval, SpawnProjectile);
 
         void SpawnProjectile()
         {
