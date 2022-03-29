@@ -159,9 +159,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 496beb97a95521e4599a938c873a15e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  launchInterval:
+  controller: {fileID: 7748784295823765792}
+  throwInterval:
     min: 1
     max: 2
+  throwForce: 10
+  throwConeRotation: 45
+  throwConeRadius: 45
 --- !u!114 &7748784295823765792
 MonoBehaviour:
   m_ObjectHideFlags: 0

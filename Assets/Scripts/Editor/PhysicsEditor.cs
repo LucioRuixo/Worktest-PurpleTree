@@ -12,6 +12,7 @@ namespace Worktest_PurpleTree.Editor
 
             EditorGUILayout.LabelField("Physical Properties", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Velocity", physics.Velocity.ToString());
+            EditorGUILayout.LabelField("Speed", physics.Velocity.magnitude.ToString());
             physics.Mass = EditorGUILayout.FloatField("Mass", physics.Mass);
 
             EditorGUILayout.Space();

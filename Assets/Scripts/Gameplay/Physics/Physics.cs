@@ -1,5 +1,5 @@
 using UnityEngine;
-using Worktest_PurpleTree.Utility.Physics;
+using Worktest_PurpleTree.Utility;
 
 namespace Worktest_PurpleTree.Gameplay.Physics
 {
@@ -34,11 +34,18 @@ namespace Worktest_PurpleTree.Gameplay.Physics
             if (Gravity) ApplyGravity();
 
             if (velocity != Vector2.zero) Translate();
+
+            if (transform.position.y < physicsManager.YLimit) Destroy(gameObject);
         }
 
-        void ApplyAcceleration(float acceleration, Vector2 direction) => velocity += acceleration * direction * Time.fixedDeltaTime;
+        void ApplyAcceleration(float acceleration, Vector2 direction)
+        {
+            velocity += acceleration * direction.normalized * Time.fixedDeltaTime;
 
-        void ApplyForce(Vector2 force) => ApplyAcceleration(PhysicsMath.Acceleration(force.magnitude, Mass), force);
+            if (velocity.magnitude > physicsManager.MaxSpeed) velocity = Math.ScaleVectorToLength(velocity, physicsManager.MaxSpeed);
+        }
+
+        void ApplyForce(Vector2 force) => ApplyAcceleration(Math.Acceleration(force.magnitude, Mass), force);
 
         void ApplyGravity() => ApplyAcceleration(GravityAcceleration, GravityDirection);
 

@@ -12,16 +12,42 @@ namespace Worktest_PurpleTree.Gameplay
         [SerializeField] GameObject projectilePrefab;
         [SerializeField] Transform projectileContainer;
 
-        bool throwing = true;
+        public Transform ProjectileContainer { get { return projectileContainer; } }
+
+        CoroutineManager coroutineManager;
+
+        bool throwing = false;
         int throwCoroutineID = -1;
 
-        //void Start() => throwCoroutineID = CoroutineManager.Instance.WaitForSeconds(model.LaunchInterval, SpawnProjectile, true);
-        void Start() => throwCoroutineID = CoroutineManager.Instance.WaitForSeconds(model.LaunchInterval, SpawnProjectile);
+        void Awake() => coroutineManager = CoroutineManager.Instance;
+
+        void Start() => StartThrowing();
+
+        void StartThrowing()
+        {
+            if (throwing) return;
+
+            throwCoroutineID = coroutineManager.WaitForSeconds(model.ThrowInterval, SpawnProjectile, true);
+            throwing = true;
+        }
+
+        void StopThrowing()
+        {
+            if (!throwing) return;
+
+            coroutineManager.StopCoroutine(throwCoroutineID);
+            throwCoroutineID = -1;
+            throwing = false;
+        }
 
         void SpawnProjectile()
         {
             Vector2 position = projectileContainer.transform.position;
-            Instantiate(projectilePrefab, position, Quaternion.identity, projectileContainer);
+            Projectile projectile = Instantiate(projectilePrefab, position, Quaternion.identity, projectileContainer).GetComponent<Projectile>();
+
+            float angle = Random.Range(-(model.ThrowConeRadius / 2f), model.ThrowConeRadius / 2f);
+            Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
+            projectile._Physics.Impulse((rotation * model.ThrowConeDirection) * model.ThrowForce);
         }
     }
 }

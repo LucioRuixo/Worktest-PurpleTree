@@ -1,21 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Worktest_PurpleTree.Gameplay
 {
     public class Projectile : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        public Physics.Physics _Physics { private set; get; }
 
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+        void Awake() => _Physics = GetComponent<Physics.Physics>();
     }
 }

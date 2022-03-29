@@ -560,8 +560,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a9ecca9cb705b42ae8d7464c1e668d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityAcceleration: 9.8
+  gravityAcceleration: 0.29
   gravityDirection: {x: 0, y: -1}
+  maxSpeed: 100
+  yLimit: -1000
 --- !u!1 &1142750779
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,6 +776,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1678352246}
     m_Modifications:
+    - target: {fileID: 1230732762575040106, guid: 71955df76cc2ecc4da14e68b4fdccb37, type: 3}
+      propertyPath: throwInterval.max
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230732762575040106, guid: 71955df76cc2ecc4da14e68b4fdccb37, type: 3}
+      propertyPath: throwInterval.min
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7748784295823765792, guid: 71955df76cc2ecc4da14e68b4fdccb37, type: 3}
       propertyPath: projectilePrefab
       value: 
