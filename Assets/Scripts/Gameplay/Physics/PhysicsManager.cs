@@ -14,7 +14,7 @@ namespace Worktest_PurpleTree.Gameplay.Physics
         [SerializeField] float yLimit = -1000f;
 
         public float GravityAcceleration { get { return gravityAcceleration; } }
-        public Vector2 GravityDirection { get { return gravityDirection; } }
+        public Vector2 GravityDirection { get { return gravityDirection.normalized; } }
 
         public float MaxSpeed { get { return maxSpeed; } }
         public float YLimit { get { return yLimit; } }

@@ -8,7 +8,20 @@ namespace Worktest_PurpleTree.Gameplay
         [Header("References")]
         [SerializeField] Player_Model model;
 
-        void Update() => TakeInput();
+        //void Update() => TakeInput();
+        //Debug
+        void Update()
+        {
+            TakeInput();
+
+            //Vector2 normal = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)).normalized;
+            //Debug.Log((Vector3)normal);
+            //float angle = Vector2.Angle(normal, Vector2.up);
+            ////Debug.Log("ANGLE: " + angle);
+            //Quaternion rotation = normal.x >= 0f ? Quaternion.Euler(0f, 0f, angle) : Quaternion.Euler(0f, 0f, -angle);
+            //Debug.DrawLine(Vector2.zero, normal, Color.red);
+            //Debug.DrawLine(Vector2.zero, rotation * normal, Color.blue);
+        }
 
         #region IMoveXY
         public void TakeInput()
