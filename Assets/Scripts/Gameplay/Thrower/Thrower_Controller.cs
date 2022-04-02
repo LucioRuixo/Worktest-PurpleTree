@@ -27,7 +27,7 @@ namespace Worktest_PurpleTree.Gameplay
         {
             if (throwing) return;
 
-            throwCoroutineID = coroutineManager.WaitForSeconds(model.ThrowInterval, SpawnProjectile, true);
+            throwCoroutineID = coroutineManager.WaitForSeconds(model.ThrowInterval, ThrowProjectile, true);
             throwing = true;
         }
 
@@ -40,7 +40,7 @@ namespace Worktest_PurpleTree.Gameplay
             throwing = false;
         }
 
-        void SpawnProjectile()
+        void ThrowProjectile()
         {
             Vector2 position = projectileContainer.transform.position;
             Projectile projectile = Instantiate(projectilePrefab, position, Quaternion.identity, projectileContainer).GetComponent<Projectile>();
