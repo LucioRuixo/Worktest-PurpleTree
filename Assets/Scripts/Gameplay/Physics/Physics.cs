@@ -41,12 +41,12 @@ namespace Worktest_PurpleTree.Gameplay.Physics
         public bool ShouldBounce { set; get; } = true;
         
         PhysicsManager physicsManager;
-        CollisionHandler collisionHandler;
+        SurfaceCollisionHandler surfaceCollisionHandler;
 
         void Awake()
         {
             physicsManager = PhysicsManager.Instance;
-            collisionHandler = new CollisionHandler(transform, GetComponent<Collider2D>());
+            surfaceCollisionHandler = new SurfaceCollisionHandler(transform, GetComponent<Collider2D>(), this);
         }
 
         void FixedUpdate()
@@ -54,11 +54,11 @@ namespace Worktest_PurpleTree.Gameplay.Physics
             if (kinematic) return;
 
             if (Gravity) ApplyGravity();
-            if (collisionHandler.State == PhysicalState.OnSurface)
+            if (surfaceCollisionHandler.State == PhysicalState.OnSurface)
             {
                 ApplyNormal();
 
-                if (collisionHandler.Surface.hasPhysics) ApplyFriction();
+                if (surfaceCollisionHandler.Surface.hasPhysics) ApplyFriction();
             }
 
             if (Velocity != Vector2.zero) Translate();
@@ -71,7 +71,7 @@ namespace Worktest_PurpleTree.Gameplay.Physics
 
             if (ShouldBounce)
             {
-                Vector2 collisionNormal = collisionHandler.GetCollisionNormal(collision);
+                Vector2 collisionNormal = surfaceCollisionHandler.GetCollisionNormal(collision);
                 Physics collisionPhysics = collision.GetComponent<Physics>();
                 Bounce(collisionNormal, collisionPhysics);
             }
@@ -81,14 +81,14 @@ namespace Worktest_PurpleTree.Gameplay.Physics
         {
             if (kinematic) return;
 
-            collisionHandler.HandleCollisionStay(collision);
+            surfaceCollisionHandler.HandleCollisionStay(collision);
         }
 
         void OnTriggerExit2D(Collider2D collision)
         {
             if (kinematic) return;
 
-            collisionHandler.HandleCollisionExit(collision);
+            surfaceCollisionHandler.HandleCollisionExit(collision);
         }
 
         #region Movement
@@ -120,9 +120,9 @@ namespace Worktest_PurpleTree.Gameplay.Physics
 
         void ApplyGravity() => ApplyAcceleration(GravityAcceleration, GravityDirection);
 
-        void ApplyNormal() => ApplyAcceleration(GravityAcceleration, collisionHandler.Surface.normal);
+        void ApplyNormal() => ApplyAcceleration(GravityAcceleration, surfaceCollisionHandler.Surface.normal);
 
-        void ApplyFriction() => ApplyAcceleration(Velocity.magnitude * collisionHandler.Surface.frictionFactor, -Velocity);
+        void ApplyFriction() => ApplyAcceleration(Velocity.magnitude * surfaceCollisionHandler.Surface.frictionFactor, -Velocity);
         #endregion
 
         public void Accelerate(float acceleration, Vector2 direction) => ApplyAcceleration(acceleration, direction);

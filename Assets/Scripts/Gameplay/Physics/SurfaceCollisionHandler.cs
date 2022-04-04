@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Worktest_PurpleTree.Utility.Math;
 
 namespace Worktest_PurpleTree.Gameplay.Physics
 {
@@ -43,20 +44,22 @@ namespace Worktest_PurpleTree.Gameplay.Physics
     }
     #endregion
 
-    public class CollisionHandler
+    public class SurfaceCollisionHandler
     {
         Transform transform;
         Collider2D collider;
+        Physics physics;
 
         public PhysicalState State { private set; get; } = PhysicalState.InAir;
         public Surface Surface { private set; get; }
 
         Dictionary<Collider2D, int> activeCollisions = new Dictionary<Collider2D, int>(); // collider, frames in collision
 
-        public CollisionHandler(Transform transform, Collider2D collider)
+        public SurfaceCollisionHandler(Transform transform, Collider2D collider, Physics physics)
         {
             this.transform = transform;
             this.collider = collider;
+            this.physics = physics;
         }
 
         public void HandleCollisionStay(Collider2D collision)
@@ -70,8 +73,11 @@ namespace Worktest_PurpleTree.Gameplay.Physics
                 Physics collisionPhysics = collision.GetComponent<Physics>();
 
                 State = PhysicalState.OnSurface;
+
                 if (collisionPhysics) Surface = new Surface(collisionNormal, collisionPhysics.FrictionFactor);
                 else Surface = new Surface(collisionNormal);
+
+                physics.Velocity = VectorMath.ScaleVectorOnAxis(physics.Velocity, Surface.normal, 0f);
             }
         }
 

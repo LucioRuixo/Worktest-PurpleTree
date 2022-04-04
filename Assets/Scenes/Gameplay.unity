@@ -1254,7 +1254,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1230732762575040106, guid: 71955df76cc2ecc4da14e68b4fdccb37, type: 3}
       propertyPath: throwForce
-      value: 450
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 1230732762575040106, guid: 71955df76cc2ecc4da14e68b4fdccb37, type: 3}
       propertyPath: throwConeRadius
@@ -1262,7 +1262,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1230732762575040106, guid: 71955df76cc2ecc4da14e68b4fdccb37, type: 3}
       propertyPath: throwConeRotation
-      value: 65
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 1230732762575040106, guid: 71955df76cc2ecc4da14e68b4fdccb37, type: 3}
       propertyPath: throwInterval.max
@@ -1270,7 +1270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1230732762575040106, guid: 71955df76cc2ecc4da14e68b4fdccb37, type: 3}
       propertyPath: throwInterval.min
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2285769926714072471, guid: 71955df76cc2ecc4da14e68b4fdccb37, type: 3}
       propertyPath: m_Name
