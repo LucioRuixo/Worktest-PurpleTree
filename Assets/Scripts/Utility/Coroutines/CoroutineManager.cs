@@ -26,6 +26,7 @@ namespace Worktest_PurpleTree.Utility.Coroutines
         }
 
         public int WaitForSeconds(float waitFor, UnityAction onWaitEnd, bool loop = false) => StartCoroutine(CWaitForSeconds(waitFor, onWaitEnd, loop));
+
         public int WaitForSeconds(MinMax<float> waitFor, UnityAction onWaitEnd, bool loop = false) => StartCoroutine(CWaitForSeconds(waitFor, onWaitEnd, loop));
 
         #region Coroutines

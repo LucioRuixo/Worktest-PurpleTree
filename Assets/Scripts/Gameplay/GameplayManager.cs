@@ -21,8 +21,9 @@ namespace Worktest_PurpleTree.Gameplay
         [SerializeField] Transform goal;
 
         [Header("Gameplay Parameters")]
-        [SerializeField] float lastReboundXThreshold;
+        [SerializeField] int timerDuration = 30;
         [Space]
+        [SerializeField] float lastReboundXThreshold;
         [SerializeField] int coinScoreGoal = 3;
 
         int rockScore = 0;
@@ -32,19 +33,22 @@ namespace Worktest_PurpleTree.Gameplay
         public float LastReboundXThreshold { get { return lastReboundXThreshold; } }
         public Vector2 GoalPosition { get { return goal.position; } }
 
+        public static event Action<int> OnTimerStart;
         public static event Action<int> OnRockScored;
-        public static event Action<int> OnCoinEarned;
+        public static event Action<int> OnCoinGained;
 
         void OnEnable()
         {
             Goal.OnPointScored += Score;
-            Player_Controller.OnCoinGrabbed += EarnCoin;
+            Player_Controller.OnCoinGrabbed += GainCoin;
         }
+
+        void Start() => OnTimerStart?.Invoke(timerDuration);
 
         void OnDisable()
         {
             Goal.OnPointScored -= Score;
-            Player_Controller.OnCoinGrabbed -= EarnCoin;
+            Player_Controller.OnCoinGrabbed -= GainCoin;
         }
 
         void Score()
@@ -68,10 +72,7 @@ namespace Worktest_PurpleTree.Gameplay
             }
         }
 
-        void EarnCoin(GameObject coin)
-        {
-            
-        }
+        void GainCoin() => OnCoinGained?.Invoke(++coins);
 
         #region Gizmos
         float lastReboundThresholdLineHeight = 5f;

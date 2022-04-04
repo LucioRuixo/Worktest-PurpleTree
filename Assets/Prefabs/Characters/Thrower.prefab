@@ -122,7 +122,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7763087169618961848}
   - component: {fileID: 1230732762575040106}
+  - component: {fileID: 5101238449924811326}
   - component: {fileID: 7748784295823765792}
+  - component: {fileID: 50497477507424124}
   m_Layer: 0
   m_Name: Thrower
   m_TagString: Untagged
@@ -166,6 +168,19 @@ MonoBehaviour:
   throwForce: 10
   throwConeRotation: 45
   throwConeRadius: 45
+--- !u!114 &5101238449924811326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7763087169618961851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f35d9648173ac2c4ba50173ad25493e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 50497477507424124}
 --- !u!114 &7748784295823765792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +194,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 1230732762575040106}
+  view: {fileID: 5101238449924811326}
   projectileSpawner: {fileID: 0}
+--- !u!95 &50497477507424124
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7763087169618961851}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 53abf04ee252ca741977ce3b82d20b0f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7763087169723098533
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,6 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7763087169723098530}
   - component: {fileID: 7763087169723098531}
+  - component: {fileID: 1874219016970946456}
   m_Layer: 0
   m_Name: Thrower
   m_TagString: Untagged
@@ -262,3 +298,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1874219016970946456
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7763087169723098533}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 53abf04ee252ca741977ce3b82d20b0f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

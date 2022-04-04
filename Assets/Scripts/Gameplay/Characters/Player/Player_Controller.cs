@@ -8,12 +8,13 @@ namespace Worktest_PurpleTree.Gameplay
     {
         [Header("References")]
         [SerializeField] Player_Model model;
+        [SerializeField] Player_View view;
 
-        public static event Action<GameObject> OnCoinGrabbed;
+        public static event Action OnCoinGrabbed;
 
         void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag(GameplayManager.CoinTag)) OnCoinGrabbed?.Invoke(collision.gameObject);
+            if (collision.CompareTag(GameplayManager.CoinTag)) OnCoinGrabbed?.Invoke();
         }
 
         void Update() => TakeInput();
@@ -29,7 +30,12 @@ namespace Worktest_PurpleTree.Gameplay
         public void TakeInput()
         {
             float xMovement = InputManager.Instance.GetAxisRaw(Axes.Horizontal);
-            if (xMovement != 0f) MoveX(xMovement * model.Speed * Time.deltaTime);
+            if (xMovement != 0f)
+            {
+                MoveX(xMovement * model.Speed * Time.deltaTime);
+                view.Moving = true;
+            }
+            else view.Moving = false;
 
             ClampPosition();
         }

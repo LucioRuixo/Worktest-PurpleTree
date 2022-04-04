@@ -8,6 +8,7 @@ namespace Worktest_PurpleTree.Gameplay
     {
         [Header("References")]
         [SerializeField] Thrower_Model model;
+        [SerializeField] Thrower_View view;
         [Space]
         [SerializeField] ProjectileSpawner projectileSpawner;
 
@@ -26,7 +27,7 @@ namespace Worktest_PurpleTree.Gameplay
         {
             if (throwing) return;
 
-            throwCoroutineID = coroutineManager.WaitForSeconds(model.ThrowInterval, ThrowProjectile, true);
+            throwCoroutineID = coroutineManager.WaitForSeconds(model.ThrowInterval, StartThrow, true);
             throwing = true;
         }
 
@@ -39,7 +40,9 @@ namespace Worktest_PurpleTree.Gameplay
             throwing = false;
         }
 
-        void ThrowProjectile()
+        void StartThrow() => view.StartThrow();
+
+        public void ThrowProjectile()
         {
             float angle = Random.Range(-(model.ThrowConeRadius / 2f), model.ThrowConeRadius / 2f);
             Quaternion rotation = Quaternion.Euler(0f, 0f, angle);

@@ -27,7 +27,8 @@ namespace Worktest_PurpleTree.Gameplay
 
         void OnDrawGizmos()
         {
-            Vector3 containerPosition = controller.ProjectileSpawner.DefaultParent.position;
+            Vector3 containerPosition = Vector3.zero;
+            if (controller.ProjectileSpawner) containerPosition = controller.ProjectileSpawner.DefaultParent.position;
             VectorMath.GetConeSides(ThrowConeDirection, throwConeRadius, out Vector2 side1, out Vector2 side2);
 
             Gizmos.color = Color.green;
