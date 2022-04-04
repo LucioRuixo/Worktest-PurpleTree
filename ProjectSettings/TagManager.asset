@@ -61,3 +61,6 @@ TagManager:
   - name: Coin
     uniqueID: 1130004567
     locked: 0
+  - name: Rebound Guide
+    uniqueID: 1735992819
+    locked: 0

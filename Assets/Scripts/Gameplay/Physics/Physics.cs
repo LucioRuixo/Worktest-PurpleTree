@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Worktest_PurpleTree.Utility.Math;
 
@@ -38,6 +39,11 @@ namespace Worktest_PurpleTree.Gameplay.Physics
         public Vector2 GravityDirection { get { return localGravity ? localGravityDirection.normalized : GlobalGravityDirection; } }
         #endregion
 
+        #region Collision Properties
+        [Header("Collision Properties")]
+        [SerializeField] List<string> ignoreTags;
+        #endregion
+
         public bool ShouldBounce { set; get; } = true;
         
         PhysicsManager physicsManager;
@@ -69,6 +75,8 @@ namespace Worktest_PurpleTree.Gameplay.Physics
         {
             if (kinematic) return;
 
+            foreach (string tag in ignoreTags) if (collision.CompareTag(tag)) return;
+
             if (ShouldBounce)
             {
                 Vector2 collisionNormal = surfaceCollisionHandler.GetCollisionNormal(collision);
@@ -81,12 +89,16 @@ namespace Worktest_PurpleTree.Gameplay.Physics
         {
             if (kinematic) return;
 
+            foreach (string tag in ignoreTags) if (collision.CompareTag(tag)) return;
+
             surfaceCollisionHandler.HandleCollisionStay(collision);
         }
 
         void OnTriggerExit2D(Collider2D collision)
         {
             if (kinematic) return;
+
+            foreach (string tag in ignoreTags) if (collision.CompareTag(tag)) return;
 
             surfaceCollisionHandler.HandleCollisionExit(collision);
         }

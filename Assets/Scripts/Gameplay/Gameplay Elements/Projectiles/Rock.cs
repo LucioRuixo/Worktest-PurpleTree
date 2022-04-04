@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Worktest_PurpleTree.Utility.Coroutines;
 using Worktest_PurpleTree.Utility.Math;
@@ -12,6 +13,10 @@ namespace Worktest_PurpleTree.Gameplay
 
         bool lastRebound = false;
         bool despawning = false;
+
+        public static event Action<float, float> OnReboundProjected;
+
+        void Start() => ProjectLanding();
 
         void OnTriggerEnter2D(Collider2D collision)
         {
@@ -52,6 +57,8 @@ namespace Worktest_PurpleTree.Gameplay
                 lastRebound = true;
                 _Physics.ShouldBounce = false;
             }
+
+            OnReboundProjected?.Invoke(projectedX, timeToLand);
         }
 
         void BounceToGoal()
