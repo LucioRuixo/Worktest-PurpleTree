@@ -1,4 +1,5 @@
 using UnityEngine;
+using Worktest_PurpleTree.Gameplay.Spawning;
 using Worktest_PurpleTree.Utility.Coroutines;
 
 namespace Worktest_PurpleTree.Gameplay
@@ -7,12 +8,10 @@ namespace Worktest_PurpleTree.Gameplay
     {
         [Header("References")]
         [SerializeField] Thrower_Model model;
+        [Space]
+        [SerializeField] ProjectileSpawner projectileSpawner;
 
-        [Header("Projectile Spawning")]
-        [SerializeField] GameObject projectilePrefab;
-        [SerializeField] Transform projectileContainer;
-
-        public Transform ProjectileContainer { get { return projectileContainer; } }
+        public Spawner ProjectileSpawner { get { return projectileSpawner; } }
 
         CoroutineManager coroutineManager;
 
@@ -42,12 +41,11 @@ namespace Worktest_PurpleTree.Gameplay
 
         void ThrowProjectile()
         {
-            Vector2 position = projectileContainer.transform.position;
-            Projectile projectile = Instantiate(projectilePrefab, position, Quaternion.identity, projectileContainer).GetComponent<Projectile>();
-
             float angle = Random.Range(-(model.ThrowConeRadius / 2f), model.ThrowConeRadius / 2f);
             Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
-            projectile._Physics.Impulse((rotation * model.ThrowConeDirection) * model.ThrowForce);
+            Vector2 force = (rotation * model.ThrowConeDirection) * model.ThrowForce;
+
+            projectileSpawner.SpawnWithImpulse(force).GetComponent<Projectile>();
         }
     }
 }

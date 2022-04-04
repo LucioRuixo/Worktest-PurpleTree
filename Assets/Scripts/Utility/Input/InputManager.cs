@@ -6,7 +6,7 @@ namespace Worktest_PurpleTree.Utility.Input
         Vertical
     }
 
-    public class InputManager : MonoBehaviourSingleton<InputManager>
+    public class InputManager : PersistentMonoBehaviourSingleton<InputManager>
     {
         public float GetAxis(Axes axis) => UnityEngine.Input.GetAxis(axis.ToString());
 

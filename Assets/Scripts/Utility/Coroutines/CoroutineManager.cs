@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace Worktest_PurpleTree.Utility.Coroutines
 {
-    public class CoroutineManager : MonoBehaviourSingleton<CoroutineManager>
+    public class CoroutineManager : PersistentMonoBehaviourSingleton<CoroutineManager>
     {
         int lastID = -1;
 

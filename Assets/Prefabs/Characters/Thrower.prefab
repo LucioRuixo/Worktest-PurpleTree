@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2285769926714072471
+--- !u!1 &7256356961755143601
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5396818191808002145}
+  - component: {fileID: 5688806995965481122}
   m_Layer: 0
-  m_Name: Projectile Container
+  m_Name: Projectiles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5396818191808002145
+--- !u!4 &5688806995965481122
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2285769926714072471}
+  m_GameObject: {fileID: 7256356961755143601}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.35, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0.3, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7763087169618961848}
@@ -143,7 +143,7 @@ Transform:
   m_Children:
   - {fileID: 7763087168835004037}
   - {fileID: 7763087169723098530}
-  - {fileID: 5396818191808002145}
+  - {fileID: 5688806995965481122}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -179,8 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 1230732762575040106}
-  projectilePrefab: {fileID: 3241308813104002763, guid: 209f75be74cb3a74886c8f4e225333ee, type: 3}
-  projectileContainer: {fileID: 5396818191808002145}
+  projectileSpawner: {fileID: 0}
 --- !u!1 &7763087169723098533
 GameObject:
   m_ObjectHideFlags: 0

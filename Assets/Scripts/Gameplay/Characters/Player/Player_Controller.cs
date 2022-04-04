@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Worktest_PurpleTree.Utility.Input;
 
@@ -8,19 +9,20 @@ namespace Worktest_PurpleTree.Gameplay
         [Header("References")]
         [SerializeField] Player_Model model;
 
-        //void Update() => TakeInput();
-        //Debug
-        void Update()
-        {
-            TakeInput();
+        public static event Action<GameObject> OnCoinGrabbed;
 
-            //Vector2 normal = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)).normalized;
-            //Debug.Log((Vector3)normal);
-            //float angle = Vector2.Angle(normal, Vector2.up);
-            ////Debug.Log("ANGLE: " + angle);
-            //Quaternion rotation = normal.x >= 0f ? Quaternion.Euler(0f, 0f, angle) : Quaternion.Euler(0f, 0f, -angle);
-            //Debug.DrawLine(Vector2.zero, normal, Color.red);
-            //Debug.DrawLine(Vector2.zero, rotation * normal, Color.blue);
+        void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag(GameplayManager.CoinTag)) OnCoinGrabbed?.Invoke(collision.gameObject);
+        }
+
+        void Update() => TakeInput();
+
+        void ClampPosition()
+        {
+            Vector2 position = transform.position;
+            position.x = Mathf.Clamp(position.x, model.XLimit.Min, model.XLimit.Max);
+            transform.position = position;
         }
 
         #region IMoveXY
@@ -28,6 +30,8 @@ namespace Worktest_PurpleTree.Gameplay
         {
             float xMovement = InputManager.Instance.GetAxisRaw(Axes.Horizontal);
             if (xMovement != 0f) MoveX(xMovement * model.Speed * Time.deltaTime);
+
+            ClampPosition();
         }
 
         public void MoveX(float xMovement)

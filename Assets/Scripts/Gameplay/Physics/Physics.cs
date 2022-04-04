@@ -1,51 +1,10 @@
-using System.Collections.Generic;
 using UnityEngine;
-using Worktest_PurpleTree.Utility;
+using Worktest_PurpleTree.Utility.Math;
 
 namespace Worktest_PurpleTree.Gameplay.Physics
 {
     public class Physics : MonoBehaviour
     {
-        #region Enums & Structs
-        enum State
-        {
-            InAir,
-            OnSurface
-        }
-
-        struct Surface
-        {
-            public Vector2 normal;
-
-            public float frictionFactor;
-            public bool hasPhysics;
-
-            public Surface(Vector2 normal, float frictionFactor)
-            {
-                this.normal = normal;
-
-                this.frictionFactor = frictionFactor;
-                hasPhysics = true;
-            }
-
-            public Surface(Vector2 normal)
-            {
-                this.normal = normal;
-
-                frictionFactor = -1f;
-                hasPhysics = false;
-            }
-
-            public void Reset()
-            {
-                normal = Vector2.zero;
-
-                frictionFactor = -1f;
-                hasPhysics = false;
-            }
-        }
-        #endregion
-
         #region Physical Properties
         [Header("Physical Properties")]
         [SerializeField] bool kinematic = false;
@@ -57,7 +16,7 @@ namespace Worktest_PurpleTree.Gameplay.Physics
         public float Mass { get { return mass; } }
         public float VerticalReboundFactor { get { return verticalReboundFactor; } }
         public float FrictionFactor { get { return frictionFactor; } }
-        public Vector2 Velocity { get { return velocity; } }
+        public Vector2 Velocity { set; get; } = Vector2.zero;
         #endregion
 
         #region Gravity Properties
@@ -79,110 +38,72 @@ namespace Worktest_PurpleTree.Gameplay.Physics
         public Vector2 GravityDirection { get { return localGravity ? localGravityDirection.normalized : GlobalGravityDirection; } }
         #endregion
 
-        State state = State.InAir;
-        Surface surface;
-
-        new Collider2D collider;
-        Dictionary<Collider2D, int> activeCollisions = new Dictionary<Collider2D, int>(); // collider, frames in collision
-
+        public bool ShouldBounce { set; get; } = true;
+        
         PhysicsManager physicsManager;
-
-        Vector2 velocity = Vector2.zero;
+        CollisionHandler collisionHandler;
 
         void Awake()
         {
-            collider = GetComponent<Collider2D>();
             physicsManager = PhysicsManager.Instance;
+            collisionHandler = new CollisionHandler(transform, GetComponent<Collider2D>());
         }
 
         void FixedUpdate()
         {
             if (kinematic) return;
 
-            if (velocity != Vector2.zero) Translate();
-            if (transform.position.y < physicsManager.YLimit) Destroy(gameObject);
-
             if (Gravity) ApplyGravity();
-            if (state == State.OnSurface)
+            if (collisionHandler.State == PhysicalState.OnSurface)
             {
                 ApplyNormal();
 
-                if (surface.hasPhysics) ApplyFriction();
+                if (collisionHandler.Surface.hasPhysics) ApplyFriction();
             }
+
+            if (Velocity != Vector2.zero) Translate();
+            if (transform.position.y < physicsManager.YLimit) Destroy(gameObject);
         }
 
         void OnTriggerEnter2D(Collider2D collision)
         {
             if (kinematic) return;
 
-            GetCollisionInfo(collision, out Vector2 point, out Vector2 normal);
-            Bounce(normal, collision.GetComponent<Physics>());
+            if (ShouldBounce)
+            {
+                Vector2 collisionNormal = collisionHandler.GetCollisionNormal(collision);
+                Physics collisionPhysics = collision.GetComponent<Physics>();
+                Bounce(collisionNormal, collisionPhysics);
+            }
         }
 
         void OnTriggerStay2D(Collider2D collision)
         {
             if (kinematic) return;
 
-            ProcessCollisionStay(collision);
+            collisionHandler.HandleCollisionStay(collision);
         }
 
         void OnTriggerExit2D(Collider2D collision)
         {
             if (kinematic) return;
 
-            ProcessCollisionExit(collision);
+            collisionHandler.HandleCollisionExit(collision);
         }
 
+        #region Movement
         void Translate()
         {
             Vector2 position = transform.position;
-            position += velocity;
+            position += Velocity * Time.deltaTime;
             transform.position = position;
-        }
-
-        #region Collision
-        void GetCollisionInfo(Collider2D collision, out Vector2 point, out Vector2 normal)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, (collision.transform.position - transform.position).normalized);
-
-            point = hit.point;
-            normal = hit.normal;
-        }
-
-        void ProcessCollisionStay(Collider2D collision)
-        {
-            if (!activeCollisions.ContainsKey(collision)) activeCollisions.Add(collision, 1);
-            else activeCollisions[collision]++;
-
-            if (activeCollisions[collision] >= physicsManager.CollisionStayThreshold)
-            {
-                GetCollisionInfo(collision, out Vector2 collisionPoint, out Vector2 collisionNormal);
-                Physics collisionPhysics = collision.GetComponent<Physics>();
-
-                Bounce(collisionNormal, collisionPhysics);
-
-                state = State.OnSurface;
-                if (collisionPhysics) surface = new Surface(collisionNormal, collisionPhysics.frictionFactor);
-                else surface = new Surface(collisionNormal);
-            }
-        }
-
-        void ProcessCollisionExit(Collider2D collision)
-        {
-            if (activeCollisions.ContainsKey(collision)) activeCollisions.Remove(collision);
-
-            if (activeCollisions.Count == 0)
-            {
-                state = State.InAir;
-                surface.Reset();
-            }
         }
 
         void Bounce(Vector2 normal, Physics surfacePhysics)
         {
-            velocity = Vector2.Reflect(velocity, normal);
+            Velocity = Vector2.Reflect(Velocity, normal);
 
-            if (surfacePhysics) velocity = Math.ScaleVectorOnAxis(velocity, normal, surfacePhysics.VerticalReboundFactor);
+            if (surfacePhysics) Velocity = VectorMath.ScaleVectorOnAxis(Velocity, normal, surfacePhysics.VerticalReboundFactor);
         }
         #endregion
 
@@ -191,17 +112,17 @@ namespace Worktest_PurpleTree.Gameplay.Physics
         {
             if (acceleration == 0f || direction == Vector2.zero) return;
 
-            velocity += acceleration * direction.normalized * Time.fixedDeltaTime;
-            if (velocity.magnitude > physicsManager.MaxSpeed) velocity = Math.ScaleVectorToLength(velocity, physicsManager.MaxSpeed);
+            Velocity += acceleration * direction.normalized * Time.fixedDeltaTime;
+            if (Velocity.magnitude > physicsManager.MaxSpeed) Velocity = VectorMath.ScaleVectorToLength(Velocity, physicsManager.MaxSpeed);
         }
 
-        void ApplyForce(Vector2 force) => ApplyAcceleration(Math.Acceleration(force.magnitude, Mass), force);
+        void ApplyForce(Vector2 force) => ApplyAcceleration(ForceMath.Acceleration(force.magnitude, Mass), force);
 
         void ApplyGravity() => ApplyAcceleration(GravityAcceleration, GravityDirection);
 
-        void ApplyNormal() => ApplyAcceleration(GravityAcceleration, surface.normal);
+        void ApplyNormal() => ApplyAcceleration(GravityAcceleration, collisionHandler.Surface.normal);
 
-        void ApplyFriction() => ApplyAcceleration(velocity.magnitude * surface.frictionFactor, -velocity);
+        void ApplyFriction() => ApplyAcceleration(Velocity.magnitude * collisionHandler.Surface.frictionFactor, -Velocity);
         #endregion
 
         public void Accelerate(float acceleration, Vector2 direction) => ApplyAcceleration(acceleration, direction);

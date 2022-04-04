@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Worktest_PurpleTree.Utility
 {
-	public class MonoBehaviourSingleton<T> : MonoBehaviour where T : Component
+	public class PersistentMonoBehaviourSingleton<T> : MonoBehaviour where T : Component
 	{
 		static T instance;
 
@@ -10,10 +10,12 @@ namespace Worktest_PurpleTree.Utility
 
 		public virtual void Awake()
 		{
-			if (instance == null) instance = this as T;
+			if (!instance)
+			{
+				instance = this as T;
+				DontDestroyOnLoad(this);
+			}
 			else Destroy(gameObject);
 		}
-
-		void OnDestroy() { if (instance == this as T) instance = null; }
 	}
 }
