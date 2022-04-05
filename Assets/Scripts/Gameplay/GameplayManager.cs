@@ -26,6 +26,8 @@ namespace Worktest_PurpleTree.Gameplay
         [SerializeField] float lastReboundXThreshold;
         [SerializeField] int coinScoreGoal = 3;
 
+        bool playing = true;
+
         int rockScore = 0;
         int coinScore = 0;
         int coins = 0;
@@ -33,9 +35,10 @@ namespace Worktest_PurpleTree.Gameplay
         public float LastReboundXThreshold { get { return lastReboundXThreshold; } }
         public Vector2 GoalPosition { get { return goal.position; } }
 
-        public static event Action<int> OnTimerStart;
+        public static event Action<int, Action> OnTimerStart;
         public static event Action<int> OnRockScored;
         public static event Action<int> OnCoinGained;
+        public static event Action OnGameEnd;
 
         void OnEnable()
         {
@@ -43,7 +46,7 @@ namespace Worktest_PurpleTree.Gameplay
             Player_Controller.OnCoinGrabbed += GainCoin;
         }
 
-        void Start() => OnTimerStart?.Invoke(timerDuration);
+        void Start() => StartTimer();
 
         void OnDisable()
         {
@@ -51,8 +54,19 @@ namespace Worktest_PurpleTree.Gameplay
             Player_Controller.OnCoinGrabbed -= GainCoin;
         }
 
+        void StartTimer() => OnTimerStart?.Invoke(timerDuration, OnTimerEnd);
+
+        void OnTimerEnd()
+        {
+            playing = false;
+
+            OnGameEnd?.Invoke();
+        }
+
         void Score()
         {
+            if (!playing) return;
+
             ScoreRockPoint();
             ScoreCoinPoint();
         }

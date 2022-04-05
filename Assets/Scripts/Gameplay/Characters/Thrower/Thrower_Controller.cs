@@ -21,7 +21,11 @@ namespace Worktest_PurpleTree.Gameplay
 
         void Awake() => coroutineManager = CoroutineManager.Instance;
 
+        void OnEnable() => GameplayManager.OnGameEnd += StopThrowing;
+
         void Start() => StartThrowing();
+
+        void OnDisable() => GameplayManager.OnGameEnd -= StopThrowing;
 
         void StartThrowing()
         {

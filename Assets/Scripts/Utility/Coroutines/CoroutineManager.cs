@@ -11,6 +11,10 @@ namespace Worktest_PurpleTree.Utility.Coroutines
 
         Dictionary<int, Coroutine> activeCoroutines = new Dictionary<int, Coroutine>();
 
+        void OnEnable() => SceneManager.OnSceneChange += StopAllCoroutines;
+        
+        void OnDisable() => SceneManager.OnSceneChange -= StopAllCoroutines;
+
         new int StartCoroutine(IEnumerator routine)
         {
             Coroutine coroutine = new Coroutine(base.StartCoroutine(routine), ++lastID);
@@ -23,6 +27,11 @@ namespace Worktest_PurpleTree.Utility.Coroutines
         {
             StopCoroutine(activeCoroutines[id].Routine);
             activeCoroutines.Remove(id);
+        }
+
+        new public void StopAllCoroutines()
+        {
+            foreach (int id in activeCoroutines.Keys) StopCoroutine(id);
         }
 
         public int WaitForSeconds(float waitFor, UnityAction onWaitEnd, bool loop = false) => StartCoroutine(CWaitForSeconds(waitFor, onWaitEnd, loop));

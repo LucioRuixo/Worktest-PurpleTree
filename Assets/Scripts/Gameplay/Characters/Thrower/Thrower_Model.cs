@@ -25,7 +25,7 @@ namespace Worktest_PurpleTree.Gameplay
         #region Gizmos
         const float ForceLineMultiplier = 0.005f;
 
-        void OnDrawGizmos()
+        void OnDrawGizmosSelected()
         {
             Vector3 containerPosition = Vector3.zero;
             if (controller.ProjectileSpawner) containerPosition = controller.ProjectileSpawner.DefaultParent.position;

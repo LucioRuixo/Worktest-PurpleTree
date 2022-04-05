@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Worktest_PurpleTree.UI
+namespace Worktest_PurpleTree.UI.Gameplay
 {
     public class ItemCounter : MonoBehaviour
     {

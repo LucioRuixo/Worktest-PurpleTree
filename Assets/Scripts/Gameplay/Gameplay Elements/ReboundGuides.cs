@@ -21,7 +21,7 @@ namespace Worktest_PurpleTree.Gameplay
 
         void SpawnGuide(float reboundX, float timeToLand)
         {
-            if (guides.Count >= 5) return;
+            if (guides.Count >= maxGuides) return;
 
             GameObject guide = guideSpawner.Spawn(new Vector2(reboundX, guideSpawner.DefaultParent.position.y));
             guides.Add(guide);

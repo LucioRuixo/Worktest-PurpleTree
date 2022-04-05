@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using Worktest_PurpleTree.Utility.Coroutines;
 
-namespace Worktest_PurpleTree.UI
+namespace Worktest_PurpleTree.UI.Gameplay
 {
     public class Timer : MonoBehaviour
     {

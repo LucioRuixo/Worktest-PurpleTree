@@ -10,7 +10,13 @@ namespace Worktest_PurpleTree.Gameplay
         [SerializeField] Player_Model model;
         [SerializeField] Player_View view;
 
+        bool takeInput = true;
+
         public static event Action OnCoinGrabbed;
+
+        void OnEnable() => GameplayManager.OnGameEnd += () => takeInput = false;
+
+        void OnDisable() => GameplayManager.OnGameEnd -= () => takeInput = false;
 
         void OnTriggerEnter2D(Collider2D collision)
         {
@@ -29,6 +35,8 @@ namespace Worktest_PurpleTree.Gameplay
         #region IMoveXY
         public void TakeInput()
         {
+            if (!takeInput) return;
+
             float xMovement = InputManager.Instance.GetAxisRaw(Axes.Horizontal);
             if (xMovement != 0f)
             {
