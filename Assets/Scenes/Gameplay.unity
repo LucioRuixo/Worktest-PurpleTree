@@ -513,7 +513,7 @@ MonoBehaviour:
   coinCounter: {fileID: 645804231}
   coinSpawner: {fileID: 1429839397}
   endMenu: {fileID: 524142204}
-  coinAnimationDuration: 0.5
+  coinAnimationDuration: 1
 --- !u!1 &466340531
 GameObject:
   m_ObjectHideFlags: 0

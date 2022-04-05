@@ -22,6 +22,7 @@ namespace Worktest_PurpleTree.UI.Gameplay
         [Header("Coin Animation Parameters")]
         [SerializeField] float coinAnimationDuration = 0.5f;
         RectTransform animatedCoin;
+        int coinCount = 0;
 
         void OnEnable()
         {
@@ -58,9 +59,9 @@ namespace Worktest_PurpleTree.UI.Gameplay
         #region Counters
         void SetRockCount(int count) => rockCounter.Count = count;
 
-        void PlayCoinAnimation(int coinCount, Transform coinWorldTransform)
+        void PlayCoinAnimation(int count, Transform coinWorldTransform)
         {
-            SetCoinCount(coinCount);
+            coinCount = count;
 
             Vector2 coinScreenPosition = Camera.main.WorldToScreenPoint(coinWorldTransform.position);
             Vector2 coinPosition = GetCanvasPosition(coinScreenPosition);
@@ -71,12 +72,16 @@ namespace Worktest_PurpleTree.UI.Gameplay
             animatedCoin = coinSpawner.Spawn().GetComponent<RectTransform>();
             animatedCoin.anchoredPosition = coinPosition;
 
-            CoroutineManager.Instance.Lerp(coinPosition, counterPosition, coinAnimationDuration, SetAnimatedCoinPosition, DespawnAnimatedCoin);
+            CoroutineManager.Instance.Lerp(coinPosition, counterPosition, coinAnimationDuration, SetAnimatedCoinPosition, OnCoinAnimationEnd);
         }
 
         void SetAnimatedCoinPosition(Vector2 position) => animatedCoin.anchoredPosition = position;
 
-        void DespawnAnimatedCoin() => Destroy(animatedCoin.gameObject);
+        void OnCoinAnimationEnd()
+        {
+            Destroy(animatedCoin.gameObject);
+            SetCoinCount(coinCount);
+        }
 
         void SetCoinCount(int count) => coinCounter.Count = count;
         #endregion
