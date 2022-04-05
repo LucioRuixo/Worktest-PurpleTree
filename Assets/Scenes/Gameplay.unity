@@ -279,6 +279,8 @@ MonoBehaviour:
   mass: 1
   verticalReboundFactor: 0.2
   frictionFactor: 0.1
+  freezePositionX: 0
+  freezePositionY: 0
   gravity: 1
   localGravity: 0
   localGravityAcceleration: 9.8
@@ -2665,6 +2667,10 @@ PrefabInstance:
     - target: {fileID: 4856749219249778426, guid: c50c371d446b5114ab27981c9b7f1012, type: 3}
       propertyPath: xLimit.min
       value: -3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4856749219249778426, guid: c50c371d446b5114ab27981c9b7f1012, type: 3}
+      propertyPath: frictionFactor
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7580716201487966888, guid: c50c371d446b5114ab27981c9b7f1012, type: 3}
       propertyPath: Kinematic

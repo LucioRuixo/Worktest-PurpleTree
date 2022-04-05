@@ -12,6 +12,9 @@ namespace Worktest_PurpleTree.Gameplay.Physics
         [SerializeField] float mass = 1f;
         [SerializeField] float verticalReboundFactor = 0.75f;
         [SerializeField] float frictionFactor = 0.5f;
+        [Space]
+        [SerializeField] bool freezePositionX = false;
+        [SerializeField] bool freezePositionY = false;
 
         public bool Kinematic { get { return kinematic; } }
         public float Mass { get { return mass; } }
@@ -57,6 +60,9 @@ namespace Worktest_PurpleTree.Gameplay.Physics
 
         void FixedUpdate()
         {
+            if (Velocity != Vector2.zero) Translate();
+            if (transform.position.y < physicsManager.YLimit) Destroy(gameObject);
+
             if (kinematic) return;
 
             if (Gravity) ApplyGravity();
@@ -66,9 +72,6 @@ namespace Worktest_PurpleTree.Gameplay.Physics
 
                 if (surfaceCollisionHandler.Surface.hasPhysics) ApplyFriction();
             }
-
-            if (Velocity != Vector2.zero) Translate();
-            if (transform.position.y < physicsManager.YLimit) Destroy(gameObject);
         }
 
         void OnTriggerEnter2D(Collider2D collision)
@@ -106,6 +109,13 @@ namespace Worktest_PurpleTree.Gameplay.Physics
         #region Movement
         void Translate()
         {
+            if (freezePositionX && freezePositionY) return;
+            else
+            {
+                if (freezePositionX) Velocity = VectorMath.ScaleVectorOnAxis(Velocity, Vector2.right, 0f);
+                else if (freezePositionY) Velocity = VectorMath.ScaleVectorOnAxis(Velocity, Vector2.up, 0f);
+            }
+
             Vector2 position = transform.position;
             position += Velocity * Time.deltaTime;
             transform.position = position;

@@ -126,10 +126,13 @@ MonoBehaviour:
   mass: 1
   verticalReboundFactor: 0.95
   frictionFactor: 0.5
+  freezePositionX: 0
+  freezePositionY: 0
   gravity: 1
   localGravity: 0
   localGravityAcceleration: 9.8
   localGravityDirection: {x: 0, y: -1}
+  ignoreTags: []
 --- !u!1 &7810927119008845518
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,11 +142,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7810927119008845519}
+  - component: {fileID: 2129383697917767377}
+  - component: {fileID: 3825401995708483421}
   - component: {fileID: 4856749219249778426}
   - component: {fileID: 142951272602876901}
   - component: {fileID: 7246200768084993181}
-  - component: {fileID: 2129383697917767377}
-  - component: {fileID: 3825401995708483421}
+  - component: {fileID: 4277529239347211037}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -167,49 +171,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4856749219249778426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7810927119008845518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 689ebc3bfd86fbb469d966c796703bea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 1
-  xLimit:
-    min: 0
-    max: 0
---- !u!114 &142951272602876901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7810927119008845518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edd2fb16c58f3bd41beeb684080c2811, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 3825401995708483421}
---- !u!114 &7246200768084993181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7810927119008845518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dd5aec3c96e800448ff452db075fd16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  model: {fileID: 4856749219249778426}
-  view: {fileID: 142951272602876901}
 --- !u!61 &2129383697917767377
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -255,6 +216,73 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4856749219249778426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7810927119008845518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689ebc3bfd86fbb469d966c796703bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceleration: 300
+  xLimit:
+    min: 0
+    max: 0
+--- !u!114 &142951272602876901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7810927119008845518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edd2fb16c58f3bd41beeb684080c2811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3825401995708483421}
+--- !u!114 &7246200768084993181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7810927119008845518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dd5aec3c96e800448ff452db075fd16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 4856749219249778426}
+  view: {fileID: 142951272602876901}
+  physics: {fileID: 4277529239347211037}
+--- !u!114 &4277529239347211037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7810927119008845518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03bc0a7fa927a454ca3e1715f31630e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kinematic: 1
+  mass: 1
+  verticalReboundFactor: 0.75
+  frictionFactor: 0.5
+  freezePositionX: 0
+  freezePositionY: 1
+  gravity: 1
+  localGravity: 0
+  localGravityAcceleration: 9.8
+  localGravityDirection: {x: 0, y: -1}
+  ignoreTags: []
 --- !u!1 &7810927120497144254
 GameObject:
   m_ObjectHideFlags: 0
