@@ -17,9 +17,9 @@ namespace Worktest_PurpleTree.Gameplay
 
         public static event Action OnCoinGrabbed;
 
-        void OnEnable() => GameplayManager.OnGameEnd += () => takeInput = false;
+        void OnEnable() => GameplayManager.OnGameEnd += OnGameEnd;
 
-        void OnDisable() => GameplayManager.OnGameEnd -= () => takeInput = false;
+        void OnDisable() => GameplayManager.OnGameEnd -= OnGameEnd;
 
         void OnTriggerEnter2D(Collider2D collision)
         {
@@ -39,6 +39,12 @@ namespace Worktest_PurpleTree.Gameplay
             }
 
             transform.position = position;
+        }
+
+        void OnGameEnd()
+        {
+            physics.Velocity = Vector2.zero;
+            takeInput = false;
         }
 
         #region IAccelerate
