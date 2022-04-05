@@ -1,5 +1,5 @@
 using UnityEngine;
-using Worktest_PurpleTree.Gameplay.Spawning;
+using Worktest_PurpleTree.Spawning;
 using Worktest_PurpleTree.Utility.Coroutines;
 
 namespace Worktest_PurpleTree.Gameplay
@@ -21,11 +21,11 @@ namespace Worktest_PurpleTree.Gameplay
 
         void Awake() => coroutineManager = CoroutineManager.Instance;
 
-        void OnEnable() => GameplayManager.OnGameEnd += StopThrowing;
+        void OnEnable() => GameManager.OnGameEnd += StopThrowing;
 
         void Start() => StartThrowing();
 
-        void OnDisable() => GameplayManager.OnGameEnd -= StopThrowing;
+        void OnDisable() => GameManager.OnGameEnd -= StopThrowing;
 
         void StartThrowing()
         {

@@ -24,15 +24,15 @@ namespace Worktest_PurpleTree.Gameplay
 
             switch (collision.tag)
             {
-                case GameplayManager.BoxTag:
+                case GameManager.BoxTag:
                     OnRebound();
                     break;
 
-                case GameplayManager.FloorTag:
+                case GameManager.FloorTag:
                     BeginDespawn();
                     break;
 
-                case GameplayManager.GoalTag:
+                case GameManager.GoalTag:
                     Despawn();
                     break;
 
@@ -52,7 +52,7 @@ namespace Worktest_PurpleTree.Gameplay
             float projectedMovement = _Physics.Velocity.x * timeToLand;
             float projectedX = transform.position.x + projectedMovement;
 
-            if (projectedX > GameplayManager.Instance.LastReboundXThreshold)
+            if (projectedX > GameManager.Instance.LastReboundXThreshold)
             {
                 lastRebound = true;
                 _Physics.ShouldBounce = false;
@@ -63,7 +63,7 @@ namespace Worktest_PurpleTree.Gameplay
 
         void BounceToGoal()
         {
-            Vector2 goalPosition = GameplayManager.Instance.GoalPosition;
+            Vector2 goalPosition = GameManager.Instance.GoalPosition;
             float xVelocity = (goalPosition.x - transform.position.x) / lastReboundDuration;
             float yVelocity = ParabolicThrow.YVelocityFromYAndTime(transform.position.y - goalPosition.y, _Physics.GravityAcceleration, lastReboundDuration);
 

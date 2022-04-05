@@ -294,6 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 7246200768084993181}
   animator: {fileID: 3825401995708483421}
+  physics: {fileID: 4277529239347211037}
   dustSpawner: {fileID: 7549008358377597410}
   dustXOffset: -0.45
 --- !u!114 &7246200768084993181

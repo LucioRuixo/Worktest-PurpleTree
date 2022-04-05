@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Worktest_PurpleTree.Gameplay.Spawning;
+using Worktest_PurpleTree.Spawning;
 using Worktest_PurpleTree.Utility.Coroutines;
 
 namespace Worktest_PurpleTree.Gameplay

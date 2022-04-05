@@ -38,7 +38,10 @@ namespace Worktest_PurpleTree.Utility.Coroutines
 
         public int WaitForSeconds(MinMax<float> waitFor, UnityAction onWaitEnd, bool loop = false) => StartCoroutine(CWaitForSeconds(waitFor, onWaitEnd, loop));
 
+        public int Lerp(Vector2 a, Vector2 b, float duration, UnityAction<Vector2> onLerpLoop, UnityAction onLerpEnd) => StartCoroutine(CLerp(a, b, duration, onLerpLoop, onLerpEnd));
+
         #region Coroutines
+        #region Wait For Seconds
         IEnumerator CWaitForSeconds(float waitFor, UnityAction onWaitEnd, bool loop)
         {
             do
@@ -60,6 +63,27 @@ namespace Worktest_PurpleTree.Utility.Coroutines
             }
             while (loop);
         }
+        #endregion
+
+        #region Lerp
+        IEnumerator CLerp(Vector2 a, Vector2 b, float duration, UnityAction<Vector2> onLerpLoop, UnityAction onLerpEnd)
+        {
+            Vector2 value = a;
+            float time = 0f;
+
+            while (value != b)
+            {
+                time += Time.deltaTime;
+                value = Vector2.Lerp(a, b, time / duration);
+
+                yield return null;
+
+                onLerpLoop?.Invoke(value);
+            }
+
+            onLerpEnd?.Invoke();
+        }
+        #endregion
         #endregion
     }
 }

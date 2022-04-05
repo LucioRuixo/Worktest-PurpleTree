@@ -1,6 +1,7 @@
 using UnityEngine;
+using Worktest_PurpleTree.Gameplay;
 
-namespace Worktest_PurpleTree.Gameplay.Spawning
+namespace Worktest_PurpleTree.Spawning
 {
     public class ProjectileSpawner : Spawner
     {

@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
-using Worktest_PurpleTree.Gameplay.Spawning;
+using Worktest_PurpleTree.Spawning;
 using Worktest_PurpleTree.Utility;
 
 namespace Worktest_PurpleTree.Gameplay
 {
-    public class GameplayManager : MonoBehaviourSingleton<GameplayManager>
+    public class GameManager : MonoBehaviourSingleton<GameManager>
     {
         #region Tags
         public const string PlayerTag = "Player";
@@ -37,7 +37,7 @@ namespace Worktest_PurpleTree.Gameplay
 
         public static event Action<int, Action> OnTimerStart;
         public static event Action<int> OnRockScored;
-        public static event Action<int> OnCoinGained;
+        public static event Action<int, Transform> OnCoinGained;
         public static event Action OnGameEnd;
 
         void OnEnable()
@@ -86,7 +86,7 @@ namespace Worktest_PurpleTree.Gameplay
             }
         }
 
-        void GainCoin() => OnCoinGained?.Invoke(++coins);
+        void GainCoin(Coin coin) => OnCoinGained?.Invoke(++coins, coin.transform);
 
         #region Gizmos
         float lastReboundThresholdLineHeight = 5f;

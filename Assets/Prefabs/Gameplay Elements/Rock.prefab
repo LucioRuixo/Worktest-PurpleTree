@@ -138,7 +138,9 @@ MonoBehaviour:
   kinematic: 0
   mass: 1
   verticalReboundFactor: 0.75
-  frictionFactor: 0.5
+  horizontalReboundFactor: 0.75
+  freezePositionX: 0
+  freezePositionY: 0
   gravity: 1
   localGravity: 0
   localGravityAcceleration: 9.8
@@ -159,4 +161,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastReboundDuration: 1.5
-  groundLifetime: 1
+  groundLifetime: 0.5

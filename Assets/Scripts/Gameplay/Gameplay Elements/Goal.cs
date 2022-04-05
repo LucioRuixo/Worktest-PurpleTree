@@ -9,7 +9,7 @@ namespace Worktest_PurpleTree.Gameplay
 
         void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag(GameplayManager.RockTag)) OnPointScored?.Invoke();
+            if (collision.CompareTag(GameManager.RockTag)) OnPointScored?.Invoke();
         }
     }
 }

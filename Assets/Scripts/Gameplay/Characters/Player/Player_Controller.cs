@@ -17,15 +17,15 @@ namespace Worktest_PurpleTree.Gameplay
 
         public float XMovement { private set; get; }
 
-        public static event Action OnCoinGrabbed;
+        public static event Action<Coin> OnCoinGrabbed;
 
-        void OnEnable() => GameplayManager.OnGameEnd += OnGameEnd;
+        void OnEnable() => GameManager.OnGameEnd += OnGameEnd;
 
-        void OnDisable() => GameplayManager.OnGameEnd -= OnGameEnd;
+        void OnDisable() => GameManager.OnGameEnd -= OnGameEnd;
 
         void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag(GameplayManager.CoinTag)) OnCoinGrabbed?.Invoke();
+            if (collision.CompareTag(GameManager.CoinTag)) OnCoinGrabbed?.Invoke(collision.GetComponent<Coin>());
         }
 
         void Update() => TakeInput();

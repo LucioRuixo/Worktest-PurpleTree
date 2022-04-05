@@ -14,7 +14,7 @@ namespace Worktest_PurpleTree.Gameplay
 
         void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag(GameplayManager.PlayerTag)) Despawn();
+            if (collision.CompareTag(GameManager.PlayerTag)) Despawn();
         }
 
         void Despawn()
