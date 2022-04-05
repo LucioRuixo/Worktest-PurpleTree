@@ -15,6 +15,8 @@ namespace Worktest_PurpleTree.Gameplay
 
         bool takeInput = true;
 
+        public float XMovement { private set; get; }
+
         public static event Action OnCoinGrabbed;
 
         void OnEnable() => GameplayManager.OnGameEnd += OnGameEnd;
@@ -52,16 +54,16 @@ namespace Worktest_PurpleTree.Gameplay
         {
             if (!takeInput) return;
 
-            float xMovement = InputManager.Instance.GetAxisRaw(Axes.Horizontal);
-            if (xMovement != 0f)
+            XMovement = InputManager.Instance.GetAxisRaw(Axes.Horizontal);
+            if (XMovement != 0f)
             {
-                Accelerate(xMovement * model.Acceleration * Time.deltaTime, Vector2.right);
-                view.Moving = true;
+                Accelerate(XMovement * model.Acceleration * Time.deltaTime, Vector2.right);
+                if (!view.Moving) view.Moving = true;
             }
             else
             {
                 Accelerate(model.Acceleration * model.FrictionFactor * Time.deltaTime, -physics.Velocity);
-                view.Moving = false;
+                if (view.Moving) view.Moving = false;
             }
 
             ClampPosition();

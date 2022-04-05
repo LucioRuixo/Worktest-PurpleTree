@@ -278,7 +278,7 @@ MonoBehaviour:
   kinematic: 1
   mass: 1
   verticalReboundFactor: 0.2
-  frictionFactor: 0.1
+  horizontalReboundFactor: 0.75
   freezePositionX: 0
   freezePositionY: 0
   gravity: 1
@@ -286,6 +286,36 @@ MonoBehaviour:
   localGravityAcceleration: 9.8
   localGravityDirection: {x: 0, y: -1}
   ignoreTags: []
+--- !u!1 &180947191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 180947192}
+  m_Layer: 0
+  m_Name: VFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &180947192
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180947191}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1678352246}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &259057654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,7 +1041,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5876096447933802640, guid: 989c6f628111c894fb5f53f6db72f65e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 166.865
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5876096447933802640, guid: 989c6f628111c894fb5f53f6db72f65e, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1808,6 +1838,7 @@ Transform:
   - {fileID: 1275711895}
   - {fileID: 1588444847}
   - {fileID: 700790265}
+  - {fileID: 180947192}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2390,7 +2421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5876096447933802640, guid: 989c6f628111c894fb5f53f6db72f65e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 176.865
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5876096447933802640, guid: 989c6f628111c894fb5f53f6db72f65e, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2443,7 +2474,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7537715501312919744, guid: c08ea759e1046f3429c326a0fd9887e1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 88.955
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7537715501312919744, guid: c08ea759e1046f3429c326a0fd9887e1, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2555,7 +2586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7537715501503591649, guid: c08ea759e1046f3429c326a0fd9887e1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 88.955
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c08ea759e1046f3429c326a0fd9887e1, type: 3}
@@ -2672,6 +2703,14 @@ PrefabInstance:
       propertyPath: frictionFactor
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7549008358377597410, guid: c50c371d446b5114ab27981c9b7f1012, type: 3}
+      propertyPath: prefab
+      value: 
+      objectReference: {fileID: 7561182801897357745, guid: 5e3e4407efdc9044aa6845d20d17ffa3, type: 3}
+    - target: {fileID: 7549008358377597410, guid: c50c371d446b5114ab27981c9b7f1012, type: 3}
+      propertyPath: defaultParent
+      value: 
+      objectReference: {fileID: 180947192}
     - target: {fileID: 7580716201487966888, guid: c50c371d446b5114ab27981c9b7f1012, type: 3}
       propertyPath: Kinematic
       value: 0

@@ -11,7 +11,7 @@ namespace Worktest_PurpleTree.Gameplay.Physics
         [SerializeField] bool kinematic = false;
         [SerializeField] float mass = 1f;
         [SerializeField] float verticalReboundFactor = 0.75f;
-        [SerializeField] float frictionFactor = 0.5f;
+        [SerializeField] float horizontalReboundFactor = 0.75f;
         [Space]
         [SerializeField] bool freezePositionX = false;
         [SerializeField] bool freezePositionY = false;
@@ -19,7 +19,7 @@ namespace Worktest_PurpleTree.Gameplay.Physics
         public bool Kinematic { get { return kinematic; } }
         public float Mass { get { return mass; } }
         public float VerticalReboundFactor { get { return verticalReboundFactor; } }
-        public float FrictionFactor { get { return frictionFactor; } }
+        public float HorizontalReboundFactor { get { return horizontalReboundFactor; } }
         public Vector2 Velocity { set; get; } = Vector2.zero;
         #endregion
 
@@ -66,12 +66,7 @@ namespace Worktest_PurpleTree.Gameplay.Physics
             if (kinematic) return;
 
             if (Gravity) ApplyGravity();
-            if (surfaceCollisionHandler.State == PhysicalState.OnSurface)
-            {
-                ApplyNormal();
-
-                if (surfaceCollisionHandler.Surface.hasPhysics) ApplyFriction();
-            }
+            if (surfaceCollisionHandler.State == PhysicalState.OnSurface) ApplyNormal();
         }
 
         void OnTriggerEnter2D(Collider2D collision)
@@ -125,7 +120,11 @@ namespace Worktest_PurpleTree.Gameplay.Physics
         {
             Velocity = Vector2.Reflect(Velocity, normal);
 
-            if (surfacePhysics) Velocity = VectorMath.ScaleVectorOnAxis(Velocity, normal, surfacePhysics.VerticalReboundFactor);
+            if (surfacePhysics)
+            {
+                Velocity = VectorMath.ScaleVectorOnAxis(Velocity, normal, surfacePhysics.VerticalReboundFactor);
+                Velocity = VectorMath.ScaleVectorOnAxis(Velocity, new Vector2(normal.y, -normal.x), surfacePhysics.HorizontalReboundFactor);
+            }
         }
         #endregion
 
@@ -142,9 +141,7 @@ namespace Worktest_PurpleTree.Gameplay.Physics
 
         void ApplyGravity() => ApplyAcceleration(GravityAcceleration, GravityDirection);
 
-        void ApplyNormal() => ApplyAcceleration(GravityAcceleration, surfaceCollisionHandler.Surface.normal);
-
-        void ApplyFriction() => ApplyAcceleration(Velocity.magnitude * surfaceCollisionHandler.Surface.frictionFactor, -Velocity);
+        void ApplyNormal() => ApplyAcceleration(GravityAcceleration, surfaceCollisionHandler.SurfaceNormal);
         #endregion
 
         public void Accelerate(float acceleration, Vector2 direction) => ApplyAcceleration(acceleration, direction);
