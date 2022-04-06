@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedc286f5714f074c975d3c4c94a7748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  defaultPrefab: {fileID: 0}
   defaultParent: {fileID: 0}
 --- !u!1 &7141293609010609551
 GameObject:
@@ -295,8 +295,9 @@ MonoBehaviour:
   controller: {fileID: 7246200768084993181}
   animator: {fileID: 3825401995708483421}
   physics: {fileID: 4277529239347211037}
-  dustSpawner: {fileID: 7549008358377597410}
-  dustXOffset: -0.45
+  dustPrefab: {fileID: 7561182801897357745, guid: 5e3e4407efdc9044aa6845d20d17ffa3, type: 3}
+  dustOffset: {x: -0.45, y: 0}
+  dustController: {fileID: 9100000, guid: 638cc25f59158944f8e35c8b2593b475, type: 2}
 --- !u!114 &7246200768084993181
 MonoBehaviour:
   m_ObjectHideFlags: 0

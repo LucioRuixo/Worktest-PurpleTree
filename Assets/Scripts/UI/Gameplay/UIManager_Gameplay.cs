@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Worktest_PurpleTree.Gameplay;
 using Worktest_PurpleTree.Spawning;
-using Worktest_PurpleTree.Utility.Coroutines;
+using Worktest_PurpleTree.VFX;
 
 namespace Worktest_PurpleTree.UI.Gameplay
 {
@@ -72,7 +72,7 @@ namespace Worktest_PurpleTree.UI.Gameplay
             animatedCoin = coinSpawner.Spawn().GetComponent<RectTransform>();
             animatedCoin.anchoredPosition = coinPosition;
 
-            CoroutineManager.Instance.Lerp(coinPosition, counterPosition, coinAnimationDuration, SetAnimatedCoinPosition, OnCoinAnimationEnd);
+            VFXManager.Instance.LerpPosition(animatedCoin, coinPosition, counterPosition, coinAnimationDuration, OnCoinAnimationEnd);
         }
 
         void SetAnimatedCoinPosition(Vector2 position) => animatedCoin.anchoredPosition = position;

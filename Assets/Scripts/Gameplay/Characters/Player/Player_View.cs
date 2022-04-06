@@ -1,5 +1,5 @@
 using UnityEngine;
-using Worktest_PurpleTree.Spawning;
+using Worktest_PurpleTree.VFX;
 
 namespace Worktest_PurpleTree.Gameplay
 {
@@ -14,10 +14,11 @@ namespace Worktest_PurpleTree.Gameplay
         [Space]
         [SerializeField] Animator animator;
         [SerializeField] Physics.Physics physics;
-        [SerializeField] Spawner dustSpawner;
 
-        [Header("Visual Parameters")]
-        [SerializeField] float dustXOffset;
+        [Header("Dust Animation")]
+        [SerializeField] GameObject dustPrefab;
+        [SerializeField] Vector2 dustOffset;
+        [SerializeField] RuntimeAnimatorController dustController;
 
         bool moving = false;
 
@@ -30,7 +31,11 @@ namespace Worktest_PurpleTree.Gameplay
                 animator.SetBool(BMoving, value);
 
                 bool spawnDust = moving && controller.XMovement > 0f && physics.Velocity.x >= 0f;
-                if (spawnDust) dustSpawner.Spawn(new Vector2(transform.position.x + dustXOffset, transform.position.y));
+                if (spawnDust)
+                {
+                    Vector2 dustPosition = new Vector2(transform.position.x + dustOffset.x, transform.position.y + dustOffset.y);
+                    VFXManager.Instance.SpawnAnimation(dustPrefab, dustPosition, dustController);
+                }
             }
 
             get { return moving; }

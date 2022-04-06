@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Worktest_PurpleTree.Utility.Coroutines
 {
@@ -32,17 +32,19 @@ namespace Worktest_PurpleTree.Utility.Coroutines
         new public void StopAllCoroutines()
         {
             foreach (int id in activeCoroutines.Keys) StopCoroutine(id);
+
+            activeCoroutines.Clear();
         }
 
-        public int WaitForSeconds(float waitFor, UnityAction onWaitEnd, bool loop = false) => StartCoroutine(CWaitForSeconds(waitFor, onWaitEnd, loop));
+        public int WaitForSeconds(float waitFor, Action onWaitEnd, bool loop = false) => StartCoroutine(CWaitForSeconds(waitFor, onWaitEnd, loop));
 
-        public int WaitForSeconds(MinMax<float> waitFor, UnityAction onWaitEnd, bool loop = false) => StartCoroutine(CWaitForSeconds(waitFor, onWaitEnd, loop));
+        public int WaitForSeconds(MinMax<float> waitFor, Action onWaitEnd, bool loop = false) => StartCoroutine(CWaitForSeconds(waitFor, onWaitEnd, loop));
 
-        public int Lerp(Vector2 a, Vector2 b, float duration, UnityAction<Vector2> onLerpLoop, UnityAction onLerpEnd) => StartCoroutine(CLerp(a, b, duration, onLerpLoop, onLerpEnd));
+        public int Lerp(Vector2 a, Vector2 b, float duration, Action<Vector2> onLerpLoop, Action onLerpEnd) => StartCoroutine(CLerp(a, b, duration, onLerpLoop, onLerpEnd));
 
         #region Coroutines
         #region Wait For Seconds
-        IEnumerator CWaitForSeconds(float waitFor, UnityAction onWaitEnd, bool loop)
+        IEnumerator CWaitForSeconds(float waitFor, Action onWaitEnd, bool loop)
         {
             do
             {
@@ -53,7 +55,7 @@ namespace Worktest_PurpleTree.Utility.Coroutines
             while (loop);
         }
 
-        IEnumerator CWaitForSeconds(MinMax<float> waitFor, UnityAction onWaitEnd, bool loop)
+        IEnumerator CWaitForSeconds(MinMax<float> waitFor, Action onWaitEnd, bool loop)
         {
             do
             {
@@ -66,7 +68,7 @@ namespace Worktest_PurpleTree.Utility.Coroutines
         #endregion
 
         #region Lerp
-        IEnumerator CLerp(Vector2 a, Vector2 b, float duration, UnityAction<Vector2> onLerpLoop, UnityAction onLerpEnd)
+        IEnumerator CLerp(Vector2 a, Vector2 b, float duration, Action<Vector2> onLerpLoop, Action onLerpEnd)
         {
             Vector2 value = a;
             float time = 0f;

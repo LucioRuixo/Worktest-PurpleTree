@@ -4,20 +4,22 @@ namespace Worktest_PurpleTree.Spawning
 {
     public class Spawner : MonoBehaviour
     {
-        [SerializeField] GameObject prefab;
-        [SerializeField] Transform defaultParent;
+        [SerializeField] protected GameObject defaultPrefab;
+        [SerializeField] protected Transform defaultParent;
 
-        public GameObject Prefab { set { prefab = value; } get { return prefab; } }
+        public GameObject Prefab { set; get; }
         public Transform DefaultParent { set { defaultParent = value; } get { return defaultParent; } }
 
-        public GameObject Spawn() => Instantiate(prefab, defaultParent.position, Quaternion.identity, defaultParent);
+        protected virtual void Awake() { if (defaultPrefab) Prefab = defaultPrefab; }
 
-        public GameObject Spawn(Vector2 position) => Instantiate(prefab, position, Quaternion.identity, defaultParent);
+        public virtual GameObject Spawn() => Instantiate(Prefab, defaultParent.position, Quaternion.identity, defaultParent);
 
-        public GameObject Spawn(Vector2 position, float rotation) => Instantiate(prefab, position, Quaternion.Euler(0f, 0f, rotation), defaultParent);
+        public virtual GameObject Spawn(Vector2 position) => Instantiate(Prefab, position, Quaternion.identity, defaultParent);
 
-        public GameObject Spawn(Vector2 position, Transform parent) => Instantiate(prefab, position, Quaternion.identity, parent);
+        public virtual GameObject Spawn(Vector2 position, float rotation) => Instantiate(Prefab, position, Quaternion.Euler(0f, 0f, rotation), defaultParent);
 
-        public GameObject Spawn(Vector2 position, float rotation, Transform parent) => Instantiate(prefab, position, Quaternion.Euler(0f, 0f, rotation), parent);
+        public virtual GameObject Spawn(Vector2 position, Transform parent) => Instantiate(Prefab, position, Quaternion.identity, parent);
+
+        public virtual GameObject Spawn(Vector2 position, float rotation, Transform parent) => Instantiate(Prefab, position, Quaternion.Euler(0f, 0f, rotation), parent);
     }
 }
